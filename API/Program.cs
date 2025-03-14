@@ -5,10 +5,10 @@ using Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.AddPresentation();
-builder.Services.AddApplicatoin();
-builder.Services.AddInfrastructure(builder.Configuration);
+// Add service configurations
+builder.Services.ConfigureInfrastructure(builder.Configuration);
+builder.Services.ConfigureApplicatoin();
+builder.Services.ConfigurePresentation();
 
 var app = builder.Build();
 

@@ -1,9 +1,9 @@
 using Infrastructure.Persistence;
 
 namespace Infrastructure.Seeders;
-internal class CategorySeeder(DataContext context) : ICategorySeeder
+internal class CategorySeeder : ICategorySeeder
 {
-    public async Task Seed()
+    public void Seed()
     {
 
     }
