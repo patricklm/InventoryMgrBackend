@@ -4,13 +4,13 @@ using Domain.Dtos.Categories;
 
 namespace Application.Services;
 
-internal sealed class CategoryService(IRepositoryManager repository) : ICategoryService
+internal sealed class CategoryService(IUnitOfWork repository) : ICategoryService
 {
     public async Task<CategoryResponse> CreateAsync(CategoryCreateRequest request)
     {
         var category = request.ToCategory();
-        repository.Categories.Insert(category);
-        await repository.SaveChangesAsync();
+        repository.Categories.Add(category);
+        await repository.CompleteAsync();
 
         return category.ToCategoryResponse();
     }
@@ -21,7 +21,7 @@ internal sealed class CategoryService(IRepositoryManager repository) : ICategory
             ?? throw new Exception($"Category with id {categoryId} not found");
 
         repository.Categories.Remove(categoryToRemove);
-        await repository.SaveChangesAsync();
+        await repository.CompleteAsync();
 
     }
 
@@ -44,7 +44,7 @@ internal sealed class CategoryService(IRepositoryManager repository) : ICategory
             ?? throw new Exception($"Category with id {categoryId} not found");
 
         category.Name = request.Name;
-        await repository.SaveChangesAsync();
+        await repository.CompleteAsync();
         return category.ToCategoryResponse();
     }
 }

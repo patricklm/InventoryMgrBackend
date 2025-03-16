@@ -18,6 +18,6 @@ public static class ServiceCollectionExtensions
         var connectionString = config.GetConnectionString("SqliteConn");
 
         services.AddDbContext<DataContext>(options => options.UseSqlite(connectionString));
-        services.AddScoped<IRepositoryManager, RepositoryManager>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

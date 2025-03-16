@@ -1,10 +1,10 @@
 namespace Domain.Contracts.Repositories;
 
-public interface IRepositoryManager
+public interface IUnitOfWork
 {
     IBrandRepository Brands { get; }
     ICategoryRepository Categories { get; }
     IProductRepository Products { get; }
 
-    Task<int> SaveChangesAsync();
+    Task<bool> CompleteAsync();
 }

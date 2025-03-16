@@ -3,7 +3,7 @@ using Domain.Contracts.Services;
 
 namespace Application.Services;
 
-internal class ServiceManager(IRepositoryManager repository) : IServiceManager
+internal class ServiceManager(IUnitOfWork repository) : IServiceManager
 {
     private readonly Lazy<IBrandService> brandService = new(
         () => new BrandService(repository));

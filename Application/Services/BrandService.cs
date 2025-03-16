@@ -3,14 +3,14 @@ using Domain.Contracts.Services;
 using Domain.Dtos.Brands;
 
 namespace Application.Services;
-internal sealed class BrandService(IRepositoryManager repository) : IBrandService
+internal sealed class BrandService(IUnitOfWork repository) : IBrandService
 {
     public async Task<BrandResponse> CreateAsync(BrandCreateRequest request)
     {
         var brand = request.ToBrand();
 
-        repository.Brands.Insert(brand);
-        await repository.SaveChangesAsync();
+        repository.Brands.Add(brand);
+        await repository.CompleteAsync();
 
         return brand.ToBrandResponse();
     }
@@ -21,7 +21,7 @@ internal sealed class BrandService(IRepositoryManager repository) : IBrandServic
             ?? throw new Exception($"Brand with id {brandId} not found");
 
         repository.Brands.Remove(brandToDelete);
-        await repository.SaveChangesAsync();
+        await repository.CompleteAsync();
     }
 
     public async Task<IEnumerable<BrandResponse>> GetAllAsync()
@@ -34,7 +34,7 @@ internal sealed class BrandService(IRepositoryManager repository) : IBrandServic
     {
         var brand = await repository.Brands.GetByIdAsync(brandId)
             ?? throw new Exception($"Brand with id {brandId} not found");
-            
+
         return brand.ToBrandResponse();
     }
 
@@ -43,9 +43,9 @@ internal sealed class BrandService(IRepositoryManager repository) : IBrandServic
         var brand = await repository.Brands.GetByIdAsync(brandId)
             ?? throw new Exception($"Brand with id {brandId} not found");
 
-        brand.Name = request.Name;
+        brand.Name = request.Name!;
 
-        await repository.SaveChangesAsync();
+        await repository.CompleteAsync();
 
         return brand.ToBrandResponse();
     }

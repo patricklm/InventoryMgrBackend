@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add service configurations
 builder.Services.ConfigureInfrastructure(builder.Configuration);
-builder.Services.ConfigureApplicatoin();
+builder.Services.ConfigureApplication();
 builder.Services.ConfigurePresentation();
 
 var app = builder.Build();

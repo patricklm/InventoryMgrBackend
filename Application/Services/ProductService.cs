@@ -4,13 +4,13 @@ using Domain.Dtos.Products;
 
 namespace Application.Services;
 
-internal class ProductService(IRepositoryManager repository) : IProductService
+internal class ProductService(IUnitOfWork repository) : IProductService
 {
     public async Task<ProductResponse> CreateAsync(ProductCreateRequest request)
     {
         var product = request.ToProduct();
-        repository.Products.Insert(product);
-        await repository.SaveChangesAsync();
+        repository.Products.Add(product);
+        await repository.CompleteAsync();
 
         return product.ToProductResponse();
     }
@@ -46,7 +46,7 @@ internal class ProductService(IRepositoryManager repository) : IProductService
         product.Price = request.Price;
         product.UnitsInStock = request.UnitsInStock;
 
-        await repository.SaveChangesAsync();
+        await repository.CompleteAsync();
 
         return product.ToProductResponse();
     }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Application.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static void ConfigureApplicatoin(this IServiceCollection services)
+    public static void ConfigureApplication(this IServiceCollection services)
     {
         var applicationAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
